@@ -1,0 +1,77 @@
+//* this sample code get an int number (n) from 1 to 10 and creates a nXn sudoku and get the numbers from input. then check the solver.
+*/
+
+package majidZanjani;
+
+import java.util.Scanner;
+
+public class SudokuChecker {
+
+    public static boolean checkall(int d, int[][] matrix, int[][] arr) {
+        boolean result = true;
+        int s = (int)(Math.sqrt(d));
+        int sigma = 0;
+        for (int i = 0; i <= d; i++) {
+            sigma = sigma + i;
+        }
+            for (int i = 0; i < d; i++) {
+                for (int j = 0; j < d; j++) {
+                    if (matrix[i][j] != 2) {
+                        result = false;
+                    }
+                }
+            } 
+            for (int i = 0; i < d - s + 1; i = i + s) {
+                for (int l = 0; l < d - s + 1; l = l + s) {
+                    int t = 0;
+                    for (int j = i; j < s + i; j++) {
+                        for (int k = l; k < s + l; k++) {
+                            t = t + arr[j][k];
+                        }
+                    }
+                    if (t != sigma) {
+                        result = false;
+                    }           
+                }
+            }            
+       return result;
+    }
+    
+    
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int s = scanner.nextInt();
+        String res = "YES";
+        
+        if (s > 1) {
+            int dim = s * s;
+            int[][] a = new int[dim][dim];
+            int[][] b = new int[dim][dim];
+
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
+                    a[i][j] = scanner.nextInt(); 
+                    b[i][j] = 0; 
+                }            
+            }
+
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
+                    b[i][a[i][j] - 1]++;
+                    b[a[i][j] - 1][j]++;
+                }
+            }
+
+            if (!checkall(dim, b, a)) {
+                res = "NO";
+            }
+
+        } else {
+            if (scanner.nextInt() != 1) {
+                res = "NO";
+            }
+        }
+        System.out.println(res);
+    }
+}
