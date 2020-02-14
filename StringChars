@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.next();
+        String a = Character.toString(scanner.next().charAt(0)) + Character.toString(scanner.next().charAt(0));
+
+        int count = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            if (i > 0) {
+                String tmp = Character.toString(str.charAt(i - 1)) + Character.toString(str.charAt(i));
+                if (a.compareTo(tmp) == 0) {
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+
+    }
+}
