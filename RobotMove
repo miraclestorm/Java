@@ -1,0 +1,115 @@
+class Main {
+
+    public static void moveRobot(Robot robot, int toX, int toY) {
+        int firstX = robot.getX();
+        int firstY = robot.getY();
+
+        if (firstX > toX) {
+            while (robot.getDirection() != Direction.LEFT) {
+                robot.turnLeft();
+            }
+            for (int i = 0; i < firstX - toX; i++) {
+                robot.stepForward();
+            }
+        } else if (firstX < toX) {
+            while (robot.getDirection() != Direction.RIGHT) {
+                robot.turnLeft();
+            }
+            for (int i = 0; i < toX - firstX; i++) {
+                robot.stepForward();
+            }
+        }
+
+        if (firstY > toY) {
+            while (robot.getDirection() != Direction.DOWN) {
+                robot.turnLeft();
+            }
+            for (int i = 0; i < firstY - toY; i++) {
+                robot.stepForward();
+            }
+        } else if (firstY < toY) {
+            while (robot.getDirection() != Direction.UP) {
+                robot.turnLeft();
+            }
+            for (int i = 0; i < toY - firstY; i++) {
+                robot.stepForward();
+            }
+        }
+    }
+
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
+    public static class Robot {
+        private int x;
+        private int y;
+        private Direction direction;
+
+        Robot (int x, int y, Direction direction) {
+            this.x = x;
+            this.y = y;
+            this.direction = direction;
+        }
+
+        public Direction getDirection() {
+            // current direction
+            return this.direction;
+        }
+        public int getX() {
+            // current X coordinate
+            return this.x;
+        }
+        public int getY() {
+            // current Y o
+            return this.y;
+        }
+        public void turnLeft() {
+            // rotate the robot 90 degrees counterclockwise
+            if (this.direction == Direction.UP) {
+                this.direction = Direction.LEFT;
+            } else if (this.direction == Direction.LEFT) {
+                this.direction = Direction.DOWN;
+            } else if (this.direction == Direction.DOWN) {
+                this.direction = Direction.RIGHT;
+            } else if (this.direction == Direction.RIGHT) {
+                this.direction = Direction.UP;
+            }
+        }
+        public void turnRight() {
+            // rotate the robot 90 degrees clockwise
+            if (this.direction == Direction.UP) {
+                this.direction = Direction.RIGHT;
+            } else if (this.direction == Direction.RIGHT) {
+                this.direction = Direction.DOWN;
+            } else if (this.direction == Direction.DOWN) {
+                this.direction = Direction.LEFT;
+            } else if (this.direction == Direction.LEFT) {
+                this.direction = Direction.UP;
+            }
+        }
+        public void stepForward() {
+            // take one step in the current direction
+            // x or y coordinate will be changed by 1
+            if (this.direction == Direction.UP) {
+                this.y++;
+            } else if (this.direction == Direction.RIGHT) {
+                this.x++;
+            } else if (this.direction == Direction.DOWN) {
+                this.y--;
+            } else if (this.direction == Direction.LEFT) {
+                this.x--;
+            }
+        }
+    }
+
+    public static void main(String [] args) {    
+    // Create a Robot in (0,0) possition and Face UP
+        Robot robot = new Robot(0, 0, Direction.UP);
+    // Moving robot to (10,0) possiotn
+        moveRobot(robot, 10, 0);
+    }
+}
